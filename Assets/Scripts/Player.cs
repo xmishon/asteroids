@@ -23,11 +23,6 @@ namespace Asteroids
 
         private void Update()
         {
-            var direction = Input.mousePosition - _camera.WorldToScreenPoint(transform.position);
-            _ship.Rotation(direction);
-            
-            _ship.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), Time.deltaTime);
-
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 _ship.AddAcceleration();
@@ -55,6 +50,17 @@ namespace Asteroids
             {
                 _hp--;
             }
+        }
+
+
+        public void SetDirection(Vector3 direction)
+        {
+            _ship.Rotation(direction);
+        }
+
+        public void Move(float moveForward, float moveRight)
+        {
+            _ship.Move(moveForward, moveRight, Time.deltaTime);
         }
     }
 }
