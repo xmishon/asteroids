@@ -2,7 +2,7 @@
 
 namespace Asteroids
 {
-    internal sealed class Player : MonoBehaviour
+    internal sealed class Player : MonoBehaviour, IMove, IRotation
     {
         [SerializeField] private float _speed;
         [SerializeField] private float _acceleration;
@@ -12,6 +12,9 @@ namespace Asteroids
         [SerializeField] private float _force;
         private Camera _camera;
         private Ship _ship;
+
+        public float Speed
+        { get; set; }
 
         private void Start()
         {
@@ -53,14 +56,14 @@ namespace Asteroids
         }
 
 
-        public void SetDirection(Vector3 direction)
+        public void Rotation(Vector3 direction)
         {
             _ship.Rotation(direction);
         }
 
-        public void Move(float moveForward, float moveRight)
+        public void Move(float moveForward, float moveRight, float deltaTime)
         {
-            _ship.Move(moveForward, moveRight, Time.deltaTime);
+            _ship.Move(moveForward, moveRight, deltaTime);
         }
     }
 }

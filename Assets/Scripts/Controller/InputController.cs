@@ -9,7 +9,8 @@ namespace Asteroids
 
         private void Update()
         {
-            _player.SetDirection(Input.mousePosition - _camera.WorldToScreenPoint(_player.transform.position));
-            _player.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            _player.Rotation(Input.mousePosition - _camera.WorldToScreenPoint(_player.transform.position));
+            _player.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), Time.deltaTime);
         }
+    }
 }
