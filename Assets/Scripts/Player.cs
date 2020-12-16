@@ -13,36 +13,15 @@ namespace Asteroids
         private Camera _camera;
         private Ship _ship;
 
-        private void Start()
+        public float Speed
+        { get; set; }
+
+        public void Start()
         {
             _camera = Camera.main;
             var moveTransform = new AccelerationMove(transform, _speed, _acceleration);
             var rotation = new RotationShip(transform);
             _ship = new Ship(moveTransform, rotation);
-        }
-
-        private void Update()
-        {
-            var direction = Input.mousePosition - _camera.WorldToScreenPoint(transform.position);
-            _ship.Rotation(direction);
-            
-            _ship.Move(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), Time.deltaTime);
-
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                _ship.AddAcceleration();
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                _ship.RemoveAcceleration();
-            }
-
-            if (Input.GetButtonDown("Fire1"))
-            {
-                var temAmmunition = Instantiate(_bullet, _barrel.position, _barrel.rotation);
-                temAmmunition.AddForce(_barrel.up * _force);
-            }
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -55,6 +34,32 @@ namespace Asteroids
             {
                 _hp--;
             }
+        }
+
+        public void AddAcceleration()
+        {
+            _ship.AddAcceleration();
+        }
+
+        public void RemoveAcceleration()
+        {
+            _ship.RemoveAcceleration();
+        }
+
+        public void Fire()
+        {
+            var temAmmunition = Instantiate(_bullet, _barrel.position, _barrel.rotation);
+            temAmmunition.AddForce(_barrel.up * _force);
+        }
+
+        public void Rotation(Vector3 direction)
+        {
+            _ship.Rotation(direction);
+        }
+
+        public void Move(float moveForward, float moveRight, float deltaTime)
+        {
+            _ship.Move(moveForward, moveRight, deltaTime);
         }
     }
 }
