@@ -16,7 +16,7 @@ namespace Asteroids
         public float Speed
         { get; set; }
 
-        private void Start()
+        public void Start()
         {
             _camera = Camera.main;
             var moveTransform = new AccelerationMove(transform, _speed, _acceleration);
