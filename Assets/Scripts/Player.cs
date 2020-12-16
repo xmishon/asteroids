@@ -2,7 +2,7 @@
 
 namespace Asteroids
 {
-    internal sealed class Player : MonoBehaviour, IMove, IRotation
+    internal sealed class Player : MonoBehaviour
     {
         [SerializeField] private float _speed;
         [SerializeField] private float _acceleration;
@@ -24,25 +24,6 @@ namespace Asteroids
             _ship = new Ship(moveTransform, rotation);
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                _ship.AddAcceleration();
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                _ship.RemoveAcceleration();
-            }
-
-            if (Input.GetButtonDown("Fire1"))
-            {
-                var temAmmunition = Instantiate(_bullet, _barrel.position, _barrel.rotation);
-                temAmmunition.AddForce(_barrel.up * _force);
-            }
-        }
-
         private void OnCollisionEnter2D(Collision2D other)
         {
             if (_hp <= 0)
@@ -55,6 +36,21 @@ namespace Asteroids
             }
         }
 
+        public void AddAcceleration()
+        {
+            _ship.AddAcceleration();
+        }
+
+        public void RemoveAcceleration()
+        {
+            _ship.RemoveAcceleration();
+        }
+
+        public void Fire()
+        {
+            var temAmmunition = Instantiate(_bullet, _barrel.position, _barrel.rotation);
+            temAmmunition.AddForce(_barrel.up * _force);
+        }
 
         public void Rotation(Vector3 direction)
         {
